@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/SiDChik/redux-regex-router/issues"
   },
-  "homepage": "https://github.com/SiDChik/redux-regex-router#readme"
+  "homepage": "https://github.com/SiDChik/redux-regex-router#readme",
+  "devDependencies": {
+    "react": "^15.4.2"
+  }
 }
