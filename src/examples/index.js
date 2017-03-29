@@ -9,30 +9,109 @@ import Route from '../components/Route';
 import Link from '../components/Link';
 
 import * as reducers from '../reducers';
-import { Provider } from 'react-redux';
+import { connect, Provider } from 'react-redux';
 import HashHistory from '../components/History';
+import Switch from '../components/Switch';
+import { addRoutingContext } from '../helpers/context';
 
-let store = createStore(combineReducers({...reducers}));
+let store = createStore(combineReducers({ ...reducers }));
+
+
+class _Simple extends React.Component {
+    render() {
+        let { kwargs, routeKwargs } = this.props;
+        let contextKwargs = this.context.getRouteKwargs();
+        return (
+            <div>
+                <p>kwargs id from store: {routeKwargs.main.id}</p>
+                <p>kwargs id from props: {kwargs.id}</p>
+                <p>kwargs id from context: {contextKwargs.id}</p>
+                <h4>test 1</h4>
+                <Link to="subRoute2/">relative link</Link>
+                <Route path="^subRoute1/$">
+                    <div>
+                        sub 1
+                        <Link to="subRoute11/">relative link sub 1</Link>
+
+                    </div>
+                </Route>
+                <Route path="^subRoute2/$">
+                    <div>
+                        sub 2
+                        <Link to="subRoute22/">relative link sub 2</Link>
+
+                    </div>
+                </Route>
+
+            </div>
+        );
+    }
+}
+;
+addRoutingContext(_Simple);
+
+const Simple = connect(state => ({ routeKwargs: state.routeKwargs }))(_Simple);
 
 ReactDom.render(
     <Provider store={store}>
         <HashHistory>
             <div>
+                <h3>Basic Usage</h3>
                 <ul>
-                    <li><Link to="/test/22/">test 1</Link></li>
+                    <li><Link to="/test/22/">test id: 22</Link></li>
+                    <li><Link to="/test/23/">test id: 23</Link></li>
                     <ul>
-                        <li><Link to="/test/22/subRoute/">test 1.1</Link></li>
+                        <li><Link to="/test/22/subRoute1/">test 1.1 sub 1 absolute</Link></li>
                     </ul>
-                    <li><Link to="/test2">test 2</Link></li>
                 </ul>
-                <Route path="^/test/(id{\d+})/">
-                    <div>
-                        test
-                        <Route path="^subRoute"><div>sub</div></Route>
-                        <Route path="test/(\d+)" absolute><div>testabsolute</div></Route>
-                    </div>
-                </Route>
-                <Route path="^/test2"><div>test2</div></Route>
+                <blockquote style={{ padding: '20px', background: '#f0f0f0' }}>
+                    <Route path="^/test/(id{\d+})/" name="main">
+                        <Simple/>
+                    </Route>
+                </blockquote>
+
+                <h3>Switch</h3>
+                <ul>
+                    <li><Link to="/test2/">test 2</Link></li>
+                    <ul>
+                        <li><Link to="/test2/123">123</Link></li>
+                        <li><Link to="/test2/12">12</Link></li>
+                        <li><Link to="/test2/1">1</Link></li>
+                        <li><Link to="/test2/not_found">not_found</Link></li>
+                    </ul>
+                </ul>
+                <blockquote style={{ padding: '20px', background: '#f0f0f0' }}>
+                    <Route path="^/test2/">
+                        <div>
+                            <h4>test 2</h4>
+                            <h5>No Switch</h5>
+                            <Route path="^123">
+                                <div>123</div>
+                            </Route>
+                            <Route path="^12">
+                                <div>12</div>
+                            </Route>
+                            <Route path="^1">
+                                <div>1</div>
+                            </Route>
+                            <h5>With Switch</h5>
+                            <Switch>
+                                <Route path="^123">
+                                    <div>123</div>
+                                </Route>
+                                <Route path="^12" name="sub12">
+                                    <div>12</div>
+                                </Route>
+                                <Route path="^1">
+                                    <div>1</div>
+                                </Route>
+                                <Route>
+                                    <div>Not Found Path</div>
+                                </Route>
+                            </Switch>
+                        </div>
+                    </Route>
+                </blockquote>
             </div>
         </HashHistory>
     </Provider>

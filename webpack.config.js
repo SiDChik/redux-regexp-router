@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 const HOST = process.env.HOST || '0.0.0.0';
-const PORT = process.env.PORT || '8888';
+const PORT = process.env.PORT || '8880';
 
 const sourcePath = path.join(__dirname, './src');
 const staticsPath = path.join(__dirname, './dist');

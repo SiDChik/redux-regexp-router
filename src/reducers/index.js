@@ -3,3 +3,4 @@
  */
 
 export routing from './routing';
+export routeKwargs from './routeKwargs';

@@ -4,135 +4,148 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-
-const keyed = /^(\w+)\{(.*)\}$/g;
+import { getRegs, getMatchInfo } from '../helpers/matcher';
+import { setRouteKwargs } from '../actions/routing';
+import { addRoutingContext } from '../helpers/context';
 
 class Route extends React.Component {
-    state = {
-        locationPath: this.getRouteLocation(),
-        matched: this.isMatched()
-    };
 
-    getRouteLocation() {
-        if (!this.props.absolute) return this.context.locationPath || this.props.routing.location.pathname;
+    routeLocation = '/'
+    args = [];
+    kwargs = {};
+    childLocation = null;
+    currentMatch = false;
 
-        return this.props.routing.location.pathname;
+    getSubRouteLocation(_props, _context) {
+        let props = _props || this.props;
+        let context = _context || this.context;
+        if (!props.absolute) return context.getChildLocation ? context.getChildLocation() : '' || props.routing.location.pathname;
+
+        return props.routing.location.pathname;
     }
+
 
     getChildContext() {
         return {
-            locationPath: this.childLocation,
+            getChildLocation: this.getChildLocation.bind(this),
+            getRouteLocation: this.getRouteLocation.bind(this),
             matchedRoute: this,
             routeArgs: _.cloneDeep(this.args),
-            routeKwargs: _.cloneDeep(this.kwargs),
+            getRouteKwargs: this.getKwargs.bind(this),
             routePath: this.getRoutePath()
         };
     }
 
-    getRoutePath() {
-        return (this.context.routePath ? this.context.routePath + '/' : '') + (this.props.name || this.props.path);
+    getChildLocation() {
+        return this.childLocation;
     }
 
-    routeRegs = null;
-    arg = [];
-    kwargs = {};
-    childLocation = null;
+    getRouteLocation() {
+        return this.routeLocation;
+    }
+
+    getKwargs() {
+        let parentKwargs = this.context.getRouteKwargs ? this.context.getRouteKwargs() : null || {};
+        return Object.assign({}, parentKwargs, _.cloneDeep(this.kwargs));
+    }
+
+    getRoutePath() {
+        let name = this.props.name ? this.props.name + '/' : '';
+        return (this.context.routePath ? this.context.routePath : '') + (name || this.props.path);
+    }
+
+
+    setMatch(flag) {
+        this.currentMatch = flag;
+        return flag;
+    }
 
     isMatched() {
-        var regs = this.getRegex();
-        let location = this.getRouteLocation();
+        if (!this.props.path) return this.setMatch(true);
+        let location = this.getSubRouteLocation();
 
         this.args = [];
         this.kwargs = {};
-        for (let regIndex in regs) {
-            if (!location) return false;
-            let reg = regs[regIndex];
-            let match = location.match(reg.reg);
-            if (match) {
-                location = location.substring(match[0].length + match.index);
-                if (reg.argument && reg.key) this.kwargs[reg.key] = match[0];
-                if (reg.argument && !reg.key) this.args.push(match[0]);
-            } else {
-                return false;
-            }
+        let matchInfo = getMatchInfo(location, this.props.path);
 
+        if (!matchInfo) return this.setMatch(false);
+        this.args = matchInfo.args;
+        this.kwargs = matchInfo.kwargs;
+        this.routeLocation = (this.context.getRouteLocation?this.context.getRouteLocation():'') + matchInfo.matchString;
+        return this.setMatch(true);
+    }
+
+    componentDidMount() {
+        this.currentMatch = false;
+    }
+
+    componentWillMount() {
+        this.isMatched();
+        this.currentMatch = false;
+        this.previousKwargs = this.kwargs;
+        this.props.dispatch(setRouteKwargs(this.getRoutePath(), this.getKwargs()));
+    }
+
+    componentWillUnmount() {
+        this.currentMatch = false;
+    }
+
+    previousKwargs = {};
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        if (!nextProps.path) return true;
+        let location = this.getSubRouteLocation(nextProps, nextContext);
+
+        let matchInfo = getMatchInfo(location, nextProps.path);
+        let matched = matchInfo !== false;
+        if (matched) {
+            this.args = matchInfo.args;
+            this.kwargs = matchInfo.kwargs;
+            this.childLocation = matchInfo.childLocation;
         }
-        this.childLocation = location;
-        return true;
-    }
 
-    getRegex() {
-        if (!this._regs) {
-            let regStrings = this.props.path.split(/[\(\)]/);
-            if (!regStrings[regStrings.length - 1]) {
-                regStrings.pop();
+        let update = this.currentMatch !== matched;
+        if (!update && matched) {
+            if (!_.isEqual(this.kwargs, this.previousKwargs)) {
+                this.previousKwargs = this.kwargs;
+                update = true;
+                this.props.dispatch(setRouteKwargs(this.getRoutePath(), this.getKwargs()));
             }
-
-            regStrings = regStrings.map((item, index) => {
-                let match = keyed.exec(item);
-                let text = item, key;
-                if (match) {
-                    key = match[1];
-                    text = match[2];
-                }
-                return {
-                    text: text,
-                    key: key,
-                    argument: index % 2
-                }
-            });
-
-            if (regStrings.length > 1 && regStrings[0].text === '^') {
-                regStrings.splice(0, 1);
-                regStrings[0].text = '^' + regStrings[0].text;
-            }
-
-            if (regStrings.length > 1 && regStrings[regStrings.length - 1].text === '$') {
-                regStrings.pop();
-                let last = regStrings.pop();
-                last.text += '$';
-                regStrings.push(last);
-            }
-
-            let lastIndex = regStrings.length - 1;
-
-            this._regs = regStrings.map((item, index) => {
-
-                item.reg = new RegExp((index > 0 ? '^' : '') + item.text);
-                return item;
-            });
         }
-        return this._regs;
+        return update;
     }
 
-    getChildLocation() {
-        return this.state.locationPath;
+    componentWillUpdate() {
+        this.props.dispatch(setRouteKwargs(this.getRoutePath(), this.getKwargs()));
     }
-
 
     render() {
         if (this.isMatched()) {
-            if (Array.isArray(this.props.children)) return <div>{this.props.children}</div>;
-            if (this.props.children) return React.Children.only(this.props.children);
+            let updateProps = {};
+            if (this.props.path && typeof(this.props.children.type) === 'function') {
+                updateProps['kwargs'] = this.getKwargs();
+            }
+
+            if (this.props.component) return React.cloneElement(this.props.component, updateProps);
+
+            if (Array.isArray(this.props.children)) return <div
+                className={this.props.className}>{this.props.children}</div>;
+
+            if (this.props.children) return React.cloneElement(this.props.children, updateProps);
         }
         return null;
     }
 }
 
 Route.childContextTypes = {
-    locationPath: React.PropTypes.string,
+    getChildLocation: React.PropTypes.func,
+    getRouteLocation: React.PropTypes.func,
     matchedRoute: React.PropTypes.object,
     routeArgs: React.PropTypes.array,
-    routeKwargs: React.PropTypes.object,
+    getRouteKwargs: React.PropTypes.func,
     routePath: React.PropTypes.string,
 };
 
-Route.contextTypes = {
-    locationPath: React.PropTypes.string,
-    matchedRoute: React.PropTypes.object,
-    routeArgs: React.PropTypes.array,
-    routeKwargs: React.PropTypes.object,
-    routePath: React.PropTypes.string,
-};
 
-export default connect(state => ({routing: state.routing}))(Route);
+addRoutingContext(Route);
+export default connect(state => ({ routing: state.routing }))(Route);

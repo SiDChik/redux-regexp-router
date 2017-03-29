@@ -48,7 +48,7 @@ const historyWrapper = (createHistory, historyType) => {
         }
 
         render() {
-            return React.Children.only(this.props.children);
+            return this.props.children;
         }
     }
 

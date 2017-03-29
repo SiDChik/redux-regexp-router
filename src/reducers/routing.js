@@ -4,7 +4,6 @@
 import { PUSH_ROUTING, SET_ROUTING } from '../actions/routing';
 const initialState = {
     history: null,
-    matches: [],
     location: null,
     query: null,
     state: null,
