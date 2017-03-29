@@ -16,9 +16,10 @@ export function pushPath(path, state) {
     }};
 }
 
-export function setRouteKwargs(path, kwargs) {
+export function setRouteKwargs(path, name, kwargs) {
     return {type: SET_KWARGS_ROUTING, payload: {
         path: path,
+        absName: name,
         kwargs: kwargs
     }};
 }

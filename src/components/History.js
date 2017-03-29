@@ -8,9 +8,24 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import createMemoryHistory from 'history/createMemoryHistory';
 import { _setRouting } from '../actions/routing';
 
-const historyWrapper = (createHistory, historyType) => {
+const createHistory = (historyType) => {
+    let historyCreator;
+    switch (historyType) {
+        case 'hash':
+            historyCreator = createHashHistory;
+            break;
+        case 'browser':
+            historyCreator = createBrowserHistory;
+            break;
+        case 'memory':
+            historyCreator = createMemoryHistory;
+            break;
+        default:
+            historyCreator = createHashHistory;
+    }
+
     class History extends React.Component {
-        history = createHistory();
+        history = historyCreator();
 
         state = {
             location: null,
@@ -48,16 +63,16 @@ const historyWrapper = (createHistory, historyType) => {
         }
 
         render() {
-            return this.props.children;
+            return React.Children.only(this.props.children);
         }
     }
 
-    return connect(state => ({routing: state.routing}))(History);
+    return connect(state => ({ routing: state.routing }))(History);
 };
 
-const HashHistory = historyWrapper(createHashHistory, 'hash');
-const BrowserHistory = historyWrapper(createBrowserHistory, 'browser');
-const MemoryHistory = historyWrapper(createMemoryHistory, 'memory');
+const HashHistory = createHistory('hash');
+const BrowserHistory = createHistory('browser');
+const MemoryHistory = createHistory('memory');
 
 export { HashHistory, BrowserHistory, MemoryHistory }
-export default HashHistory;
+export default createHistory;

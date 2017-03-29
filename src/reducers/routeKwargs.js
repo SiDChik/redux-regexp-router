@@ -14,6 +14,9 @@ export default function history(state = initialState, action) {
                 path = path.slice(0, -1);
             }
             newState[path] = payload.kwargs;
+            if (payload.absName) {
+                newState[payload.absName] = payload.kwargs;
+            }
             return newState;
     }
     return state;

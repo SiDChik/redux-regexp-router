@@ -19,7 +19,7 @@ class Route extends React.Component {
     getSubRouteLocation(_props, _context) {
         let props = _props || this.props;
         let context = _context || this.context;
-        if (!props.absolute) return context.getChildLocation ? context.getChildLocation() : '' || props.routing.location.pathname;
+        if (!props.absolute) return (context.getChildLocation ? context.getChildLocation() : '') || props.routing.location.pathname;
 
         return props.routing.location.pathname;
     }
@@ -50,7 +50,7 @@ class Route extends React.Component {
     }
 
     getRoutePath() {
-        let name = this.props.name ? this.props.name + '/' : '';
+        let name = this.props.name ? (this.props.name + '/') : '';
         return (this.context.routePath ? this.context.routePath : '') + (name || this.props.path);
     }
 
@@ -71,19 +71,20 @@ class Route extends React.Component {
         if (!matchInfo) return this.setMatch(false);
         this.args = matchInfo.args;
         this.kwargs = matchInfo.kwargs;
+        this.childLocation = matchInfo.childLocation;
         this.routeLocation = (this.context.getRouteLocation?this.context.getRouteLocation():'') + matchInfo.matchString;
         return this.setMatch(true);
     }
 
     componentDidMount() {
-        this.currentMatch = false;
+        // this.currentMatch = false;
     }
 
     componentWillMount() {
         this.isMatched();
         this.currentMatch = false;
         this.previousKwargs = this.kwargs;
-        this.props.dispatch(setRouteKwargs(this.getRoutePath(), this.getKwargs()));
+        this.props.dispatch(setRouteKwargs(this.getRoutePath(), this.props.absName, this.getKwargs()));
     }
 
     componentWillUnmount() {
@@ -109,19 +110,20 @@ class Route extends React.Component {
             if (!_.isEqual(this.kwargs, this.previousKwargs)) {
                 this.previousKwargs = this.kwargs;
                 update = true;
-                this.props.dispatch(setRouteKwargs(this.getRoutePath(), this.getKwargs()));
+                this.props.dispatch(setRouteKwargs(this.getRoutePath(), nextProps.absName, this.getKwargs()));
             }
         }
         return update;
     }
 
     componentWillUpdate() {
-        this.props.dispatch(setRouteKwargs(this.getRoutePath(), this.getKwargs()));
+        this.props.dispatch(setRouteKwargs(this.getRoutePath(), this.props.absName, this.getKwargs()));
     }
 
     render() {
         if (this.isMatched()) {
             let updateProps = {};
+
             if (this.props.path && typeof(this.props.children.type) === 'function') {
                 updateProps['kwargs'] = this.getKwargs();
             }

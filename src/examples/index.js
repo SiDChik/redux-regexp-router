@@ -10,12 +10,13 @@ import Link from '../components/Link';
 
 import * as reducers from '../reducers';
 import { connect, Provider } from 'react-redux';
-import HashHistory from '../components/History';
+import createHistory from '../components/History';
 import Switch from '../components/Switch';
 import { addRoutingContext } from '../helpers/context';
 
 let store = createStore(combineReducers({ ...reducers }));
 
+const HashHistory = createHistory('hash');
 
 class _Simple extends React.Component {
     render() {
@@ -26,16 +27,15 @@ class _Simple extends React.Component {
                 <p>kwargs id from store: {routeKwargs.main.id}</p>
                 <p>kwargs id from props: {kwargs.id}</p>
                 <p>kwargs id from context: {contextKwargs.id}</p>
-                <h4>test 1</h4>
                 <Link to="subRoute2/">relative link</Link>
-                <Route path="^subRoute1/$">
+                <Route path="^subRoute1/(id{\d+})/" absName="subRoute">
                     <div>
                         sub 1
-                        <Link to="subRoute11/">relative link sub 1</Link>
+                        <Link to="subRoute11/44/">relative link sub 1</Link>
 
                     </div>
                 </Route>
-                <Route path="^subRoute2/$">
+                <Route path="^subRoute2/">
                     <div>
                         sub 2
                         <Link to="subRoute22/">relative link sub 2</Link>
@@ -61,7 +61,7 @@ ReactDom.render(
                     <li><Link to="/test/22/">test id: 22</Link></li>
                     <li><Link to="/test/23/">test id: 23</Link></li>
                     <ul>
-                        <li><Link to="/test/22/subRoute1/">test 1.1 sub 1 absolute</Link></li>
+                        <li><Link to="/test/22/subRoute1/33/">test 1.1 sub 1 absolute</Link></li>
                     </ul>
                 </ul>
                 <blockquote style={{ padding: '20px', background: '#f0f0f0' }}>
