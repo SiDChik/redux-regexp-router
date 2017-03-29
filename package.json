@@ -1,8 +1,8 @@
 {
   "name": "redux-regexp-router",
-  "version": "0.1.4",
+  "version": "0.1.5.0",
   "description": "RegExp based router",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "start": "webpack-dev-server --progress",
     "prepublish": "npm run build",
