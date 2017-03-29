@@ -24,13 +24,15 @@ class Switch extends React.Component {
             if (child.type.WrappedComponent.name === 'Route') {
                 let props = child.props;
 
+                let kwargs = this.context.getRouteKwargs?this.context.getRouteKwargs():{};
+
                 if (!props.path && childIndex === lastIndex) {
                     // Not Found Route
-                    return React.cloneElement(child, {kwargs: this.context.getRouteKwargs()});
+                    return React.cloneElement(child, {kwargs: kwargs});
                 }
 
                 if (getMatchInfo(this.getRouteLocation(), props.path)) {
-                    return React.cloneElement(child, {kwargs: this.context.getRouteKwargs()});
+                    return React.cloneElement(child, {kwargs: kwargs});
                 }
 
             } else {
