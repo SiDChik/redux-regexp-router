@@ -1,6 +1,6 @@
 {
   "name": "redux-regexp-router",
-  "version": "0.1.5.0",
+  "version": "0.1.7",
   "description": "RegExp based router",
   "main": "./dist/index.js",
   "scripts": {
@@ -17,6 +17,9 @@
   "bugs": {
     "url": "https://github.com/SiDChik/redux-regexp-router/issues"
   },
+  "files": [
+    "dist"
+  ],
   "homepage": "https://github.com/SiDChik/redux-regexp-router#readme",
   "devDependencies": {
     "babel-cli": "^6.24.0",
