@@ -9,7 +9,7 @@ import { addRoutingContext } from '../helpers/context';
 
 class Switch extends React.Component {
     getRouteLocation() {
-        if (!this.props.absolute) return this.context.getChildLocation() || this.props.routing.location.pathname;
+        if (!this.props.absolute) return (this.context.getChildLocation?this.context.getChildLocation():'') || this.props.routing.location.pathname;
 
         return this.props.routing.location.pathname;
     }
