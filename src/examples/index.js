@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { combineReducers, createStore } from 'redux'
 
-import { Switch, Route, Link, routeReducers, createHistory, addRoutingContext } from '../../index.js';
+import { Switch, Route, Link, routeReducers, createHistory, addRoutingContext } from '../index.js';
 
 import { connect, Provider } from 'react-redux';
 
