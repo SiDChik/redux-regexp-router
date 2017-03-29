@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SiDChik/redux-regex-router.git"
+    "url": "git+https://github.com/SiDChik/redux-regexp-router.git"
   },
   "author": "Stas Degtyarev <mail@sidchik.ru> (http://sidchik.ru)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SiDChik/redux-regex-router/issues"
+    "url": "https://github.com/SiDChik/redux-regexp-router/issues"
   },
-  "homepage": "https://github.com/SiDChik/redux-regex-router#readme",
+  "homepage": "https://github.com/SiDChik/redux-regexp-router#readme",
   "devDependencies": {
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
