@@ -5,16 +5,12 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { combineReducers, createStore } from 'redux'
 
-import Route from '../components/Route';
-import Link from '../components/Link';
+import { Switch, Route, Link, routeReducers, createHistory, addRoutingContext } from '../../index.js';
 
-import * as reducers from '../reducers';
 import { connect, Provider } from 'react-redux';
-import createHistory from '../components/History';
-import Switch from '../components/Switch';
-import { addRoutingContext } from '../helpers/context';
 
-let store = createStore(combineReducers({ ...reducers }));
+console.log(routeReducers);
+let store = createStore(combineReducers({ ...routeReducers }));
 
 const HashHistory = createHistory('hash');
 
