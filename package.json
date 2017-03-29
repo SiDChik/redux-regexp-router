@@ -1,7 +1,7 @@
 {
-  "name": "redux-regex-router",
+  "name": "redux-regexp-router",
   "version": "1.0.0",
-  "description": "",
+  "description": "RegExp based router",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --progress"
