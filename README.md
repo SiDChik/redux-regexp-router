@@ -85,7 +85,7 @@ You can pass relative link to Link component. This link have an adress based on 
     </Route>
 ...
 ```
-Link will have an address: /about/company
+Link will have an address: /about/company. To absolute link just add / at first.
 
 ### Patterns / Path
 Path matching based on RegExp. Also you can set kwargs for your routes.
@@ -97,3 +97,41 @@ Path matching based on RegExp. Also you can set kwargs for your routes.
 * ^products/(id{\d+})/$ - `id` kwarg with digits
 * ^products/(slug{\d+})/$ - `slug` kwarg with [0-9a-z_]
 * ^products/(category{\w+})/(id{\d+})/$ - creates `category` and `id` kwargs
+
+### Access to Kwargs
+#### By Props 
+Child component of Route will have this.props.kwargs
+#### By Store 
+Connect your component to reducer `routeKwargs`. RouteKwargs contain kwargs by Routes. Key is a concatenate of nested routes path or name .
+```js
+<Route path="^link1/(id{\d+})" name="link1">
+    <div>Link1</div>
+    <Route path="^(id{\d+})" name="sublink">
+        <div>SubRoute</div>
+    </Route>
+</Route>
+```
+routeKwargs state by url /link1/1/2/:
+```json
+{
+  'link1': {
+    'id': '1'
+  },
+  'link1/sublink': {
+    'id': '2'
+  }
+}
+```
+#### By Context
+Use helper addRoutingContext to add Context. After this you can get kwargs based on current 
+route of your component. To get kwargs use: this.context.getRouteKwargs() 
+
+### Absolute Routes
+If you need, you can create Route ignoring parent location, just add absolute prop.
+url: /test/nested/test
+```js
+    <Route path="^test/">
+        <Route path="^nested">Will show</Route>
+        <Route path="^test/nes" absolute>Will Show too, becouse absolute</Route>
+    </Route>
+```
