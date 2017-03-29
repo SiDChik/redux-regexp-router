@@ -114,11 +114,11 @@ Connect your component to reducer `routeKwargs`. RouteKwargs contain kwargs by R
 routeKwargs state by url /link1/1/2/:
 ```json
 {
-  'link1': {
-    'id': '1'
+  "link1": {
+    "id": "1"
   },
-  'link1/sublink': {
-    'id': '2'
+  "link1/sublink": {
+    "id": "2"
   }
 }
 ```
