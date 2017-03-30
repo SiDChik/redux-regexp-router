@@ -5,12 +5,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { getRegs, getMatchInfo } from '../helpers/matcher';
-import { setRouteKwargs } from '../actions/routing';
+import { setCurrentRoute, setRouteKwargs } from '../actions/routing';
 import { addRoutingContext } from '../helpers/context';
 
 class Route extends React.Component {
-
-    routeLocation = '/'
+    routeLocation = '/';
     args = [];
     kwargs = {};
     childLocation = null;
@@ -23,7 +22,6 @@ class Route extends React.Component {
 
         return props.routing.location.pathname;
     }
-
 
     getChildContext() {
         return {
@@ -72,7 +70,7 @@ class Route extends React.Component {
         this.args = matchInfo.args;
         this.kwargs = matchInfo.kwargs;
         this.childLocation = matchInfo.childLocation;
-        this.routeLocation = (this.context.getRouteLocation?this.context.getRouteLocation():'') + matchInfo.matchString;
+        this.routeLocation = (this.context.getRouteLocation ? this.context.getRouteLocation() : '') + matchInfo.matchString;
         return this.setMatch(true);
     }
 
@@ -82,13 +80,13 @@ class Route extends React.Component {
 
     componentWillMount() {
         this.isMatched();
-        this.currentMatch = false;
+        this.setMatch(false);
         this.previousKwargs = this.kwargs;
         this.props.dispatch(setRouteKwargs(this.getRoutePath(), this.props.absName, this.getKwargs()));
     }
 
     componentWillUnmount() {
-        this.currentMatch = false;
+        this.setMatch(false);
     }
 
     previousKwargs = {};
@@ -112,6 +110,10 @@ class Route extends React.Component {
                 update = true;
                 this.props.dispatch(setRouteKwargs(this.getRoutePath(), nextProps.absName, this.getKwargs()));
             }
+        }
+
+        if (update) {
+            this.props.dispatch(setCurrentRoute(this));
         }
         return update;
     }
