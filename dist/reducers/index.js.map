@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/reducers/index.js"],"names":["routing","routeKwargs"],"mappings":";;;;;;;;;;;;;;;;;QAIOA,O,sBAJP;;;;QAKOC,W","file":"index.js","sourcesContent":["/**\n * Created by sidchik on 28.03.17.\n */\n\nexport routing from './routing';\nexport routeKwargs from './routeKwargs';"]}

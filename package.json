@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --progress",
     "prepublish": "npm run build",
-    "build": "babel src --presets=es2015,react,stage-0 --out-dir dist"
+    "build": "babel src --presets=es2015,react,stage-0 --out-dir dist --source-maps"
   },
   "repository": {
     "type": "git",

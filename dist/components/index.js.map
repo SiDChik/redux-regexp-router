@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/components/index.js"],"names":["Route","Switch","Link"],"mappings":";;;;;;;;;;;;;;;;;;;;;QAGOA,K,oBAHP;;;;QAIOC,M;QACAC,I","file":"index.js","sourcesContent":["/**\n * Created by sidchik on 29.03.17.\n */\nexport Route from './Route';\nexport Switch from './Switch';\nexport Link from './Link';"]}
