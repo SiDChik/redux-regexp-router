@@ -11,7 +11,8 @@ var initialState = {
     history: null,
     location: null,
     query: null,
-    state: null
+    state: null,
+    currentRoute: null
 }; /**
     * Created by sidchik on 28.03.17.
     */
@@ -25,6 +26,8 @@ function history() {
         case _routing.PUSH_ROUTING:
             state.history.push(action.payload.path, action.payload.state);
             break;
+        case _routing.SET_CURRENT_ROUTE:
+            return Object.assign({}, state, action.payload);
     }
     return state;
 }

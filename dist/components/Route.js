@@ -125,14 +125,14 @@ var Route = function (_React$Component) {
         key: 'componentWillMount',
         value: function componentWillMount() {
             this.isMatched();
-            this.currentMatch = false;
+            this.setMatch(false);
             this.previousKwargs = this.kwargs;
             this.props.dispatch((0, _routing.setRouteKwargs)(this.getRoutePath(), this.props.absName, this.getKwargs()));
         }
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
-            this.currentMatch = false;
+            this.setMatch(false);
         }
     }, {
         key: 'shouldComponentUpdate',
@@ -155,6 +155,10 @@ var Route = function (_React$Component) {
                     update = true;
                     this.props.dispatch((0, _routing.setRouteKwargs)(this.getRoutePath(), nextProps.absName, this.getKwargs()));
                 }
+            }
+
+            if (update) {
+                this.props.dispatch((0, _routing.setCurrentRoute)(this));
             }
             return update;
         }
