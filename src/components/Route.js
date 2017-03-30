@@ -80,9 +80,13 @@ class Route extends React.Component {
 
     componentWillMount() {
         this.isMatched();
-        this.setMatch(false);
+
         this.previousKwargs = this.kwargs;
         this.props.dispatch(setRouteKwargs(this.getRoutePath(), this.props.absName, this.getKwargs()));
+        if (this.currentMatch) {
+            this.props.dispatch(setCurrentRoute(this));
+        }
+        this.setMatch(false);
     }
 
     componentWillUnmount() {

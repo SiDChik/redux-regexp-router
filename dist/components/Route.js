@@ -125,9 +125,13 @@ var Route = function (_React$Component) {
         key: 'componentWillMount',
         value: function componentWillMount() {
             this.isMatched();
-            this.setMatch(false);
+
             this.previousKwargs = this.kwargs;
             this.props.dispatch((0, _routing.setRouteKwargs)(this.getRoutePath(), this.props.absName, this.getKwargs()));
+            if (this.currentMatch) {
+                this.props.dispatch((0, _routing.setCurrentRoute)(this));
+            }
+            this.setMatch(false);
         }
     }, {
         key: 'componentWillUnmount',
