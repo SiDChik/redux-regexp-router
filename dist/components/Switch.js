@@ -56,22 +56,23 @@ var Switch = function (_React$Component) {
             for (var childIndex in childrens) {
                 var childIndex = parseInt(childIndex);
                 var child = childrens[childIndex];
-                if (child.type.WrappedComponent.name === 'Route') {
-                    var props = child.props;
+                // if (child.type.WrappedComponent.name === 'Route') {
+                var props = child.props;
 
-                    var kwargs = this.context.getRouteKwargs ? this.context.getRouteKwargs() : {};
+                var kwargs = this.context.getRouteKwargs ? this.context.getRouteKwargs() : {};
 
-                    if (!props.path && childIndex === lastIndex) {
-                        // Not Found Route
-                        return _react2.default.cloneElement(child, { kwargs: kwargs });
-                    }
-
-                    if ((0, _matcher.getMatchInfo)(this.getRouteLocation(), props.path)) {
-                        return _react2.default.cloneElement(child, { kwargs: kwargs });
-                    }
-                } else {
-                    console.error('Switch accepts only Route children');
+                if (!props.path && childIndex === lastIndex) {
+                    // Not Found Route
+                    return _react2.default.cloneElement(child, { kwargs: kwargs });
                 }
+
+                if ((0, _matcher.getMatchInfo)(this.getRouteLocation(), props.path)) {
+                    return _react2.default.cloneElement(child, { kwargs: kwargs });
+                }
+
+                // } else {
+                //     console.error('Switch accepts only Route children');
+                // }
             }
 
             return null;

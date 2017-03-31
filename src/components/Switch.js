@@ -9,7 +9,7 @@ import { addRoutingContext } from '../helpers/context';
 
 class Switch extends React.Component {
     getRouteLocation() {
-        if (!this.props.absolute) return (this.context.getChildLocation?this.context.getChildLocation():'') || this.props.routing.location.pathname;
+        if (!this.props.absolute) return (this.context.getChildLocation ? this.context.getChildLocation() : '') || this.props.routing.location.pathname;
 
         return this.props.routing.location.pathname;
     }
@@ -21,23 +21,23 @@ class Switch extends React.Component {
         for (let childIndex in childrens) {
             let childIndex = parseInt(childIndex);
             let child = childrens[childIndex];
-            if (child.type.WrappedComponent.name === 'Route') {
-                let props = child.props;
+            // if (child.type.WrappedComponent.name === 'Route') {
+            let props = child.props;
 
-                let kwargs = this.context.getRouteKwargs?this.context.getRouteKwargs():{};
+            let kwargs = this.context.getRouteKwargs ? this.context.getRouteKwargs() : {};
 
-                if (!props.path && childIndex === lastIndex) {
-                    // Not Found Route
-                    return React.cloneElement(child, {kwargs: kwargs});
-                }
-
-                if (getMatchInfo(this.getRouteLocation(), props.path)) {
-                    return React.cloneElement(child, {kwargs: kwargs});
-                }
-
-            } else {
-                console.error('Switch accepts only Route children');
+            if (!props.path && childIndex === lastIndex) {
+                // Not Found Route
+                return React.cloneElement(child, { kwargs: kwargs });
             }
+
+            if (getMatchInfo(this.getRouteLocation(), props.path)) {
+                return React.cloneElement(child, { kwargs: kwargs });
+            }
+
+            // } else {
+            //     console.error('Switch accepts only Route children');
+            // }
         }
 
         return null;
@@ -46,4 +46,4 @@ class Switch extends React.Component {
 
 addRoutingContext(Switch);
 
-export default connect(state=>({routing: state.routing}))(Switch);
+export default connect(state => ({ routing: state.routing }))(Switch);
