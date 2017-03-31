@@ -4,7 +4,7 @@
 let regsCache = {};
 let matchCache = {};
 
-const keyed = /^(\w+)\{(.*)\}$/g;
+const keyed = /^(\w+)=(.*)$/g;
 
 function _getMatchInfo(location, pattern) {
     let regs = getRegs(pattern);

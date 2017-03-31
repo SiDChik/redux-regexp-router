@@ -24,7 +24,7 @@ class _Simple extends React.Component {
                 <p>kwargs id from props: {kwargs.id}</p>
                 <p>kwargs id from context: {contextKwargs.id}</p>
                 <Link to="subRoute2/">relative link</Link>
-                <Route path="^subRoute1/(id{\d+})/" absName="subRoute">
+                <Route path="^subRoute1/(id=\d+)/" absName="subRoute">
                     <div>
                         sub 1
                         <Link to="subRoute11/44/">relative link sub 1</Link>
@@ -61,7 +61,7 @@ ReactDom.render(
                     </ul>
                 </ul>
                 <blockquote style={{ padding: '20px', background: '#f0f0f0' }}>
-                    <Route path="^/test/(id{\d+})/" name="main">
+                    <Route path="^/test/(id=\d+)/" name="main">
                         <Simple/>
                     </Route>
                 </blockquote>

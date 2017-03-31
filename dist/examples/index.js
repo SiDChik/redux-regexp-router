@@ -79,7 +79,7 @@ var _Simple = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                     _index.Route,
-                    { path: '^subRoute1/(id{\\d+})/', absName: 'subRoute' },
+                    { path: '^subRoute1/(id=\\d+)/', absName: 'subRoute' },
                     _react2.default.createElement(
                         'div',
                         null,
@@ -173,7 +173,7 @@ _reactDom2.default.render(_react2.default.createElement(
                 { style: { padding: '20px', background: '#f0f0f0' } },
                 _react2.default.createElement(
                     _index.Route,
-                    { path: '^/test/(id{\\d+})/', name: 'main' },
+                    { path: '^/test/(id=\\d+)/', name: 'main' },
                     _react2.default.createElement(Simple, null)
                 )
             ),

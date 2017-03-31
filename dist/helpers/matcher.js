@@ -11,7 +11,7 @@ exports.getRegs = getRegs;
 var regsCache = {};
 var matchCache = {};
 
-var keyed = /^(\w+)\{(.*)\}$/g;
+var keyed = /^(\w+)=(.*)$/g;
 
 function _getMatchInfo(location, pattern) {
     var regs = getRegs(pattern);

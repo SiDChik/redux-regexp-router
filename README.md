@@ -90,13 +90,13 @@ Link will have an address: /about/company. To absolute link just add / at first.
 ### Patterns / Path
 Path matching based on RegExp. Also you can set kwargs for your routes.
 ```js
-    <Route path="^products/(id{\d+})/$" component={<Product/>}/>
-    <Route path="^products/(slug{\w+})/$" component={<Product/>}/>
-    <Route path="^products/(category{\w+})/(id{\d+})/$" component={<Product/>}/>
+    <Route path="^products/(id=\d+)/$" component={<Product/>}/>
+    <Route path="^products/(slug=\w+)/$" component={<Product/>}/>
+    <Route path="^products/(category=\w+)/(id=\d+)/$" component={<Product/>}/>
 ```
-* ^products/(id{\d+})/$ - `id` kwarg with digits
-* ^products/(slug{\d+})/$ - `slug` kwarg with [0-9a-z_]
-* ^products/(category{\w+})/(id{\d+})/$ - creates `category` and `id` kwargs
+* ^products/(id=\d+)/$ - `id` kwarg with digits
+* ^products/(slug=\w+)/$ - `slug` kwarg with [0-9a-z_]
+* ^products/(category=\w+)/(id=\d+)/$ - creates `category` and `id` kwargs
 
 ### Access to Kwargs
 #### By Props 
@@ -104,9 +104,9 @@ Child component of Route will have this.props.kwargs
 #### By Store 
 Connect your component to reducer `routeKwargs`. RouteKwargs contain kwargs by Routes. Key is a concatenate of nested routes path or name .
 ```js
-<Route path="^link1/(id{\d+})" name="link1">
+<Route path="^link1/(id=\d+)" name="link1">
     <div>Link1</div>
-    <Route path="^(id{\d+})" name="sublink">
+    <Route path="^(id=\d+)" name="sublink">
         <div>SubRoute</div>
     </Route>
 </Route>
