@@ -1,4 +1,5 @@
 Redux Regexp Router
+[![npm version](https://img.shields.io/npm/v/redux-regexp-router.svg?style=flat-square)](https://www.npmjs.com/package/redux-regexp-router) [![npm downloads](https://img.shields.io/npm/dm/redux-regexp-router.svg?style=flat-square)](https://www.npmjs.com/package/redux-regexp-router)
 =========================
 
 Declarative routing for [React Redux](https://github.com/reactjs/react-redux) 
