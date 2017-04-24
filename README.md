@@ -77,6 +77,19 @@ Just put one Route to another.
 ...
 ```
 
+### Switch routing
+You can place many routes in one section. First matched route will display.
+```js
+...
+    <Switch>
+        <Route path="^path123/"><span>path123</span></Route>
+        <Route path="^path12/"><span>path12</span></Route>
+        <Route path="^path1/"><span>path12</span></Route>
+        <Route><span>not found</span></Route>
+    </Switch>
+...
+````
+
 ### Relative links
 You can pass relative link to Link component. This link have an adress based on Route location.
 ```js

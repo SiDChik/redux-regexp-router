@@ -79,6 +79,8 @@ class Route extends React.Component {
     }
 
     componentWillMount() {
+        this.routeLocation = (this.context.getRouteLocation ? this.context.getRouteLocation() : '');
+        this.childLocation = (this.context.childLocation ? this.context.childLocation() : '');
         this.isMatched();
 
         this.previousKwargs = this.kwargs;

@@ -131,189 +131,33 @@ _reactDom2.default.render(_react2.default.createElement(
             _react2.default.createElement(
                 'h3',
                 null,
-                'Basic Usage'
+                'Test Switch in Switch'
             ),
             _react2.default.createElement(
-                'ul',
+                _index.Switch,
                 null,
-                _react2.default.createElement(
-                    'li',
-                    null,
-                    _react2.default.createElement(
-                        _index.Link,
-                        { to: '/test/22/' },
-                        'test id: 22'
-                    )
-                ),
-                _react2.default.createElement(
-                    'li',
-                    null,
-                    _react2.default.createElement(
-                        _index.Link,
-                        { to: '/test/23/' },
-                        'test id: 23'
-                    )
-                ),
-                _react2.default.createElement(
-                    'ul',
-                    null,
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement(
-                            _index.Link,
-                            { to: '/test/22/subRoute1/33/' },
-                            'test 1.1 sub 1 absolute'
-                        )
-                    )
-                )
-            ),
-            _react2.default.createElement(
-                'blockquote',
-                { style: { padding: '20px', background: '#f0f0f0' } },
                 _react2.default.createElement(
                     _index.Route,
-                    { path: '^/test/(id=\\d+)/', name: 'main' },
-                    _react2.default.createElement(Simple, null)
-                )
-            ),
-            _react2.default.createElement(
-                'h3',
-                null,
-                'Switch'
-            ),
-            _react2.default.createElement(
-                'ul',
-                null,
-                _react2.default.createElement(
-                    'li',
-                    null,
-                    _react2.default.createElement(
-                        _index.Link,
-                        { to: '/test2/' },
-                        'test 2'
-                    )
-                ),
-                _react2.default.createElement(
-                    'ul',
-                    null,
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement(
-                            _index.Link,
-                            { to: '/test2/123' },
-                            '123'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement(
-                            _index.Link,
-                            { to: '/test2/12' },
-                            '12'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement(
-                            _index.Link,
-                            { to: '/test2/1' },
-                            '1'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement(
-                            _index.Link,
-                            { to: '/test2/not_found' },
-                            'not_found'
-                        )
-                    )
-                )
-            ),
-            _react2.default.createElement(
-                'blockquote',
-                { style: { padding: '20px', background: '#f0f0f0' } },
-                _react2.default.createElement(
-                    _index.Route,
-                    { path: '^/test2/' },
+                    { path: '^/sw1/' },
                     _react2.default.createElement(
                         'div',
                         null,
-                        _react2.default.createElement(
-                            'h4',
-                            null,
-                            'test 2'
-                        ),
-                        _react2.default.createElement(
-                            'h5',
-                            null,
-                            'No Switch'
-                        ),
-                        _react2.default.createElement(
-                            _index.Route,
-                            { path: '^123' },
-                            _react2.default.createElement(
-                                'div',
-                                null,
-                                '123'
-                            )
-                        ),
-                        _react2.default.createElement(
-                            _index.Route,
-                            { path: '^12' },
-                            _react2.default.createElement(
-                                'div',
-                                null,
-                                '12'
-                            )
-                        ),
-                        _react2.default.createElement(
-                            _index.Route,
-                            { path: '^1' },
-                            _react2.default.createElement(
-                                'div',
-                                null,
-                                '1'
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'h5',
-                            null,
-                            'With Switch'
-                        ),
+                        'another switch',
+                        _react2.default.createElement('br', null),
                         _react2.default.createElement(
                             _index.Switch,
                             null,
                             _react2.default.createElement(
                                 _index.Route,
-                                { path: '^123' },
+                                { path: '^sw2/' },
                                 _react2.default.createElement(
                                     'div',
                                     null,
-                                    '123'
-                                )
-                            ),
-                            _react2.default.createElement(
-                                _index.Route,
-                                { path: '^12', name: 'sub12' },
-                                _react2.default.createElement(
-                                    'div',
-                                    null,
-                                    '12'
-                                )
-                            ),
-                            _react2.default.createElement(
-                                _index.Route,
-                                { path: '^1' },
-                                _react2.default.createElement(
-                                    'div',
-                                    null,
-                                    '1'
+                                    _react2.default.createElement(
+                                        _index.Link,
+                                        { to: 'test/' },
+                                        'test'
+                                    )
                                 )
                             ),
                             _react2.default.createElement(
@@ -322,10 +166,23 @@ _reactDom2.default.render(_react2.default.createElement(
                                 _react2.default.createElement(
                                     'div',
                                     null,
-                                    'Not Found Path'
+                                    _react2.default.createElement(
+                                        _index.Link,
+                                        { to: 'sw2/' },
+                                        'sw2'
+                                    )
                                 )
                             )
                         )
+                    )
+                ),
+                _react2.default.createElement(
+                    _index.Route,
+                    null,
+                    _react2.default.createElement(
+                        _index.Link,
+                        { to: 'sw1/' },
+                        'sw1'
                     )
                 )
             )
