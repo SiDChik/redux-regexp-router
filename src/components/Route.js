@@ -2,6 +2,7 @@
  * Created by sidchik on 28.03.17.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { getRegs, getMatchInfo } from '../helpers/matcher';
@@ -148,12 +149,12 @@ class Route extends React.Component {
 }
 
 Route.childContextTypes = {
-    getChildLocation: React.PropTypes.func,
-    getRouteLocation: React.PropTypes.func,
-    matchedRoute: React.PropTypes.object,
-    routeArgs: React.PropTypes.array,
-    getRouteKwargs: React.PropTypes.func,
-    routePath: React.PropTypes.string,
+    getChildLocation: PropTypes.func,
+    getRouteLocation: PropTypes.func,
+    matchedRoute: PropTypes.object,
+    routeArgs: PropTypes.array,
+    getRouteKwargs: PropTypes.func,
+    routePath: PropTypes.string,
 };
 
 

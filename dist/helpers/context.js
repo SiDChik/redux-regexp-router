@@ -10,24 +10,28 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Created by sidchik on 29.03.17.
+ */
 function addToContext(module, data) {
     if (!module.contextTypes) module.contextTypes = {};
     Object.assign(module.contextTypes, data);
-} /**
-   * Created by sidchik on 29.03.17.
-   */
-;
+};
 
 function addRoutingContext(module) {
     addToContext(module, {
-        getChildLocation: _react2.default.PropTypes.func,
-        getRouteLocation: _react2.default.PropTypes.func,
-        matchedRoute: _react2.default.PropTypes.object,
-        routeArgs: _react2.default.PropTypes.array,
-        getRouteKwargs: _react2.default.PropTypes.func,
-        routePath: _react2.default.PropTypes.string
+        getChildLocation: _propTypes2.default.func,
+        getRouteLocation: _propTypes2.default.func,
+        matchedRoute: _propTypes2.default.object,
+        routeArgs: _propTypes2.default.array,
+        getRouteKwargs: _propTypes2.default.func,
+        routePath: _propTypes2.default.string
     });
 };
 //# sourceMappingURL=context.js.map
