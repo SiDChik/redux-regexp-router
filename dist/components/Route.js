@@ -10,6 +10,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _reactRedux = require('react-redux');
 
 var _lodash = require('lodash');
@@ -202,12 +206,12 @@ var Route = function (_React$Component) {
 }(_react2.default.Component);
 
 Route.childContextTypes = {
-    getChildLocation: _react2.default.PropTypes.func,
-    getRouteLocation: _react2.default.PropTypes.func,
-    matchedRoute: _react2.default.PropTypes.object,
-    routeArgs: _react2.default.PropTypes.array,
-    getRouteKwargs: _react2.default.PropTypes.func,
-    routePath: _react2.default.PropTypes.string
+    getChildLocation: _propTypes2.default.func,
+    getRouteLocation: _propTypes2.default.func,
+    matchedRoute: _propTypes2.default.object,
+    routeArgs: _propTypes2.default.array,
+    getRouteKwargs: _propTypes2.default.func,
+    routePath: _propTypes2.default.string
 };
 
 (0, _context2.addRoutingContext)(Route);
