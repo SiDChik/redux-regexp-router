@@ -128,13 +128,8 @@ var Route = function (_React$Component) {
             this.args = matchInfo.args;
             this.kwargs = matchInfo.kwargs;
             this.childLocation = matchInfo.childLocation;
-            this.routeLocation = (this.context.getRouteLocation ? this.context.getRouteLocation() : '') + matchInfo.matchString;
+            this.routeLocation = (this.context && this.context.getRouteLocation ? this.context.getRouteLocation() : '') + matchInfo.matchString;
             return this.setMatch(true);
-        }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            // this.currentMatch = false;
         }
     }, {
         key: 'componentWillUnmount',

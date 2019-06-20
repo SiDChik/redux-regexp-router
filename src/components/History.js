@@ -67,6 +67,9 @@ const createHistory = (historyType) => {
         }
 
         render() {
+            // # render only on ready
+            const {routing} = this.props;
+            if (!routing.location) return null;
             return React.Children.only(this.props.children);
         }
     }

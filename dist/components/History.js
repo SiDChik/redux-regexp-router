@@ -99,6 +99,10 @@ var createHistory = function createHistory(historyType) {
         }, {
             key: 'render',
             value: function render() {
+                // # render only on ready
+                var routing = this.props.routing;
+
+                if (!routing.location) return null;
                 return _react2.default.Children.only(this.props.children);
             }
         }]);
