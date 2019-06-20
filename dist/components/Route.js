@@ -40,18 +40,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Route = function (_React$Component) {
     _inherits(Route, _React$Component);
 
-    function Route() {
-        var _ref;
-
-        var _temp, _this, _ret;
-
+    function Route(props) {
         _classCallCheck(this, Route);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
+        var _this = _possibleConstructorReturn(this, (Route.__proto__ || Object.getPrototypeOf(Route)).call(this, props));
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Route.__proto__ || Object.getPrototypeOf(Route)).call.apply(_ref, [this].concat(args))), _this), _this.routeLocation = '/', _this.args = [], _this.kwargs = {}, _this.childLocation = null, _this.currentMatch = false, _this.previousKwargs = {}, _temp), _possibleConstructorReturn(_this, _ret);
+        _this.routeLocation = '/';
+        _this.args = [];
+        _this.kwargs = {};
+        _this.childLocation = null;
+        _this.currentMatch = false;
+        _this.previousKwargs = {};
+
+        _this.routeLocation = _this.context && _this.context.getRouteLocation ? _this.context.getRouteLocation() : '';
+        _this.childLocation = _this.context && _this.context.childLocation ? _this.context.childLocation() : '';
+        _this.isMatched();
+
+        _this.previousKwargs = _this.kwargs;
+        props.dispatch((0, _routing.setRouteKwargs)(_this.getRoutePath(), props.absName, _this.getKwargs()));
+        if (_this.currentMatch) {
+            props.dispatch((0, _routing.setCurrentRoute)(_this));
+        }
+        _this.setMatch(false);
+        return _this;
     }
 
     _createClass(Route, [{
@@ -59,9 +70,9 @@ var Route = function (_React$Component) {
         value: function getSubRouteLocation(_props, _context) {
             var props = _props || this.props;
             var context = _context || this.context;
-            if (!props.absolute) return (context.getChildLocation ? context.getChildLocation() : '') || props.routing.location.pathname;
-
-            return props.routing.location.pathname;
+            if (!props.absolute && context && context.getChildLocation) return context.getChildLocation();
+            if (props.routing && props.routing.location) return props.routing.location.pathname;
+            return '';
         }
     }, {
         key: 'getChildContext',
@@ -88,14 +99,14 @@ var Route = function (_React$Component) {
     }, {
         key: 'getKwargs',
         value: function getKwargs() {
-            var parentKwargs = this.context.getRouteKwargs ? this.context.getRouteKwargs() : null || {};
+            var parentKwargs = this.context && this.context.getRouteKwargs ? this.context.getRouteKwargs() : null || {};
             return Object.assign({}, parentKwargs, _lodash2.default.cloneDeep(this.kwargs));
         }
     }, {
         key: 'getRoutePath',
         value: function getRoutePath() {
             var name = this.props.name ? this.props.name + '/' : '';
-            return (this.context.routePath ? this.context.routePath : '') + (name || this.props.path);
+            return (this.context && this.context.routePath ? this.context.routePath : '') + (name || this.props.path);
         }
     }, {
         key: 'setMatch',
@@ -124,20 +135,6 @@ var Route = function (_React$Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             // this.currentMatch = false;
-        }
-    }, {
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            this.routeLocation = this.context.getRouteLocation ? this.context.getRouteLocation() : '';
-            this.childLocation = this.context.childLocation ? this.context.childLocation() : '';
-            this.isMatched();
-
-            this.previousKwargs = this.kwargs;
-            this.props.dispatch((0, _routing.setRouteKwargs)(this.getRoutePath(), this.props.absName, this.getKwargs()));
-            if (this.currentMatch) {
-                this.props.dispatch((0, _routing.setCurrentRoute)(this));
-            }
-            this.setMatch(false);
         }
     }, {
         key: 'componentWillUnmount',

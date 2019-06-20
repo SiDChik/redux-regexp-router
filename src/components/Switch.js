@@ -2,20 +2,21 @@
  * Created by sidchik on 28.03.17.
  */
 import React from 'react';
-import Route from './Route';
-import { getRegs, getMatchInfo } from '../helpers/matcher';
+import { getMatchInfo } from '../helpers/matcher';
 import { connect } from 'react-redux';
 import { addRoutingContext } from '../helpers/context';
+import { get } from 'lodash';
 
 class Switch extends React.Component {
     getRouteLocation() {
-        if (!this.props.absolute) return (this.context.getChildLocation ? this.context.getChildLocation() : '') || this.props.routing.location.pathname;
+        const context = this.context;
+        if (!this.props.absolute && context && context.getChildLocation) return context.getChildLocation();
 
-        return this.props.routing.location.pathname;
+        return get(this, 'props.routing.location.pathname', '');
     }
 
     render() {
-        const childrens = React.Children.toArray(this.props.children)
+        const childrens = React.Children.toArray(this.props.children);
 
         const lastIndex = childrens.length - 1;
         for (let childIndex in childrens) {

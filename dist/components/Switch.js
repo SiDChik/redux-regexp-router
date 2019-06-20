@@ -10,15 +10,13 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Route = require('./Route');
-
-var _Route2 = _interopRequireDefault(_Route);
-
 var _matcher = require('../helpers/matcher');
 
 var _reactRedux = require('react-redux');
 
 var _context = require('../helpers/context');
+
+var _lodash = require('lodash');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -43,9 +41,10 @@ var Switch = function (_React$Component) {
     _createClass(Switch, [{
         key: 'getRouteLocation',
         value: function getRouteLocation() {
-            if (!this.props.absolute) return (this.context.getChildLocation ? this.context.getChildLocation() : '') || this.props.routing.location.pathname;
+            var context = this.context;
+            if (!this.props.absolute && context && context.getChildLocation) return context.getChildLocation();
 
-            return this.props.routing.location.pathname;
+            return (0, _lodash.get)(this, 'props.routing.location.pathname', '');
         }
     }, {
         key: 'render',

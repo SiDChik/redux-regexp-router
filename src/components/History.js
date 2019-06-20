@@ -3,9 +3,7 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
-import createHashHistory from 'history/createHashHistory';
-import createBrowserHistory from 'history/createBrowserHistory';
-import createMemoryHistory from 'history/createMemoryHistory';
+import { createHashHistory, createBrowserHistory, createMemoryHistory } from 'history';
 import { _setRouting } from '../actions/routing';
 
 const createHistory = (historyType) => {
@@ -27,17 +25,18 @@ const createHistory = (historyType) => {
     class History extends React.Component {
         history = historyCreator();
 
-        state = {
-            location: null,
-            action: null
-        };
 
         extractQuery(query) {
             return {};
         }
 
-        componentWillMount() {
-            this.props.dispatch(_setRouting({
+        constructor(props) {
+            super(props);
+            this.state = {
+                location: null,
+                action: null
+            };
+            props.dispatch(_setRouting({
                 historyType: historyType,
                 history: this.history,
                 location: this.history.location,
@@ -50,12 +49,17 @@ const createHistory = (historyType) => {
                     location: location,
                     action: action
                 }, function () {
-                    this.props.dispatch(_setRouting({
+                    props.dispatch(_setRouting({
                         location: this.state.location,
                         query: this.extractQuery(),
                     }));
                 });
             })
+
+        }
+
+        componentWillMount() {
+
         }
 
         componentWillUnmount() {
@@ -67,7 +71,13 @@ const createHistory = (historyType) => {
         }
     }
 
-    return connect(state => ({ routing: state.routing }))(History);
+    const mapStateToProps = (state /*, ownProps*/) => {
+      return {
+        routing: state.routing
+      }
+    };
+
+    return connect(mapStateToProps)(History);
 };
 
 const HashHistory = createHistory('hash');

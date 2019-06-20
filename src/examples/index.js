@@ -52,62 +52,62 @@ ReactDom.render(
     <Provider store={store}>
         <HashHistory>
             <div>
-                {/*<h3>Basic Usage</h3>*/}
-                {/*<ul>*/}
-                {/*<li><Link to="/test/22/">test id: 22</Link></li>*/}
-                {/*<li><Link to="/test/23/">test id: 23</Link></li>*/}
-                {/*<ul>*/}
-                {/*<li><Link to="/test/22/subRoute1/33/">test 1.1 sub 1 absolute</Link></li>*/}
-                {/*</ul>*/}
-                {/*</ul>*/}
-                {/*<blockquote style={{ padding: '20px', background: '#f0f0f0' }}>*/}
-                {/*<Route path="^/test/(id=\d+)/" name="main">*/}
-                {/*<Simple/>*/}
-                {/*</Route>*/}
-                {/*</blockquote>*/}
+                <h3>Basic Usage</h3>
+                <ul>
+                <li><Link to="/test/22/">test id: 22</Link></li>
+                <li><Link to="/test/23/">test id: 23</Link></li>
+                <ul>
+                <li><Link to="/test/22/subRoute1/33/">test 1.1 sub 1 absolute</Link></li>
+                </ul>
+                </ul>
+                <blockquote style={{ padding: '20px', background: '#f0f0f0' }}>
+                <Route path="^/test/(id=\d+)/" name="main">
+                <Simple/>
+                </Route>
+                </blockquote>
 
-                {/*<h3>Switch</h3>*/}
-                {/*<ul>*/}
-                {/*<li><Link to="/test2/">test 2</Link></li>*/}
-                {/*<ul>*/}
-                {/*<li><Link to="/test2/123">123</Link></li>*/}
-                {/*<li><Link to="/test2/12">12</Link></li>*/}
-                {/*<li><Link to="/test2/1">1</Link></li>*/}
-                {/*<li><Link to="/test2/not_found">not_found</Link></li>*/}
-                {/*</ul>*/}
-                {/*</ul>*/}
-                {/*<blockquote style={{ padding: '20px', background: '#f0f0f0' }}>*/}
-                {/*<Route path="^/test2/">*/}
-                {/*<div>*/}
-                {/*<h4>test 2</h4>*/}
-                {/*<h5>No Switch</h5>*/}
-                {/*<Route path="^123">*/}
-                {/*<div>123</div>*/}
-                {/*</Route>*/}
-                {/*<Route path="^12">*/}
-                {/*<div>12</div>*/}
-                {/*</Route>*/}
-                {/*<Route path="^1">*/}
-                {/*<div>1</div>*/}
-                {/*</Route>*/}
-                {/*<h5>With Switch</h5>*/}
-                {/*<Switch>*/}
-                {/*<Route path="^123">*/}
-                {/*<div>123</div>*/}
-                {/*</Route>*/}
-                {/*<Route path="^12" name="sub12">*/}
-                {/*<div>12</div>*/}
-                {/*</Route>*/}
-                {/*<Route path="^1">*/}
-                {/*<div>1</div>*/}
-                {/*</Route>*/}
-                {/*<Route>*/}
-                {/*<div>Not Found Path</div>*/}
-                {/*</Route>*/}
-                {/*</Switch>*/}
-                {/*</div>*/}
-                {/*</Route>*/}
-                {/*</blockquote>*/}
+                <h3>Switch</h3>
+                <ul>
+                <li><Link to="/test2/">test 2</Link></li>
+                <ul>
+                <li><Link to="/test2/123">123</Link></li>
+                <li><Link to="/test2/12">12</Link></li>
+                <li><Link to="/test2/1">1</Link></li>
+                <li><Link to="/test2/not_found">not_found</Link></li>
+                </ul>
+                </ul>
+                <blockquote style={{ padding: '20px', background: '#f0f0f0' }}>
+                <Route path="^/test2/">
+                <div>
+                <h4>test 2</h4>
+                <h5>No Switch</h5>
+                <Route path="^123">
+                <div>123</div>
+                </Route>
+                <Route path="^12">
+                <div>12</div>
+                </Route>
+                <Route path="^1">
+                <div>1</div>
+                </Route>
+                <h5>With Switch</h5>
+                <Switch>
+                <Route path="^123">
+                <div>123</div>
+                </Route>
+                <Route path="^12" name="sub12">
+                <div>12</div>
+                </Route>
+                <Route path="^1">
+                <div>1</div>
+                </Route>
+                <Route>
+                <div>Not Found Path</div>
+                </Route>
+                </Switch>
+                </div>
+                </Route>
+                </blockquote>
 
 
                 <h3>Test Switch in Switch</h3>
@@ -128,28 +128,28 @@ ReactDom.render(
                     <Route><Link to="sw1/">sw1</Link></Route>
                 </Switch>
 
-                {/*<h3>control</h3>*/}
-                {/*<Route path="^/sw1/">*/}
-                    {/*<div>*/}
-                        {/*<Link to="sw2/">sw2</Link>*/}
-                        {/*<Route path="^sw2/">*/}
-                            {/*<Link to="2">2</Link>*/}
-                        {/*</Route>*/}
-                    {/*</div>*/}
-                {/*</Route>*/}
-                {/*<h3>control2</h3>*/}
-                {/*<Route path="^/sw1/">*/}
-                    {/*<div>*/}
-                        {/*<div>*/}
-                        {/*<Link to="sw2/">sw2</Link>*/}
-                        {/*<Route path="^sw2/">*/}
-                            {/*<div>*/}
-                                {/*<Link to="2">2</Link>*/}
-                            {/*</div>*/}
-                        {/*</Route>*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
-                {/*</Route>*/}
+                <h3>control</h3>
+                <Route path="^/sw1/">
+                    <div>
+                        <Link to="sw2/">sw2</Link>
+                        <Route path="^sw2/">
+                            <Link to="2">2</Link>
+                        </Route>
+                    </div>
+                </Route>
+                <h3>control2</h3>
+                <Route path="^/sw1/">
+                    <div>
+                        <div>
+                        <Link to="sw2/">sw2</Link>
+                        <Route path="^sw2/">
+                            <div>
+                                <Link to="2">2</Link>
+                            </div>
+                        </Route>
+                        </div>
+                    </div>
+                </Route>
             </div>
         </HashHistory>
     </Provider>

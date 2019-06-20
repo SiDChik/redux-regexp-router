@@ -13,17 +13,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require('react-redux');
 
-var _createHashHistory = require('history/createHashHistory');
-
-var _createHashHistory2 = _interopRequireDefault(_createHashHistory);
-
-var _createBrowserHistory = require('history/createBrowserHistory');
-
-var _createBrowserHistory2 = _interopRequireDefault(_createBrowserHistory);
-
-var _createMemoryHistory = require('history/createMemoryHistory');
-
-var _createMemoryHistory2 = _interopRequireDefault(_createMemoryHistory);
+var _history = require('history');
 
 var _routing = require('../actions/routing');
 
@@ -42,68 +32,65 @@ var createHistory = function createHistory(historyType) {
     var historyCreator = void 0;
     switch (historyType) {
         case 'hash':
-            historyCreator = _createHashHistory2.default;
+            historyCreator = _history.createHashHistory;
             break;
         case 'browser':
-            historyCreator = _createBrowserHistory2.default;
+            historyCreator = _history.createBrowserHistory;
             break;
         case 'memory':
-            historyCreator = _createMemoryHistory2.default;
+            historyCreator = _history.createMemoryHistory;
             break;
         default:
-            historyCreator = _createHashHistory2.default;
+            historyCreator = _history.createHashHistory;
     }
 
     var History = function (_React$Component) {
         _inherits(History, _React$Component);
-
-        function History() {
-            var _ref;
-
-            var _temp, _this, _ret;
-
-            _classCallCheck(this, History);
-
-            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-                args[_key] = arguments[_key];
-            }
-
-            return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = History.__proto__ || Object.getPrototypeOf(History)).call.apply(_ref, [this].concat(args))), _this), _this.history = historyCreator(), _this.state = {
-                location: null,
-                action: null
-            }, _temp), _possibleConstructorReturn(_this, _ret);
-        }
 
         _createClass(History, [{
             key: 'extractQuery',
             value: function extractQuery(query) {
                 return {};
             }
-        }, {
-            key: 'componentWillMount',
-            value: function componentWillMount() {
-                var _this2 = this;
+        }]);
 
-                this.props.dispatch((0, _routing._setRouting)({
-                    historyType: historyType,
-                    history: this.history,
-                    location: this.history.location,
-                    query: this.extractQuery()
-                }));
+        function History(props) {
+            _classCallCheck(this, History);
 
-                this.unlisten = this.history.listen(function (location, action) {
-                    // location is an object like window.location
-                    _this2.setState({
-                        location: location,
-                        action: action
-                    }, function () {
-                        this.props.dispatch((0, _routing._setRouting)({
-                            location: this.state.location,
-                            query: this.extractQuery()
-                        }));
-                    });
+            var _this = _possibleConstructorReturn(this, (History.__proto__ || Object.getPrototypeOf(History)).call(this, props));
+
+            _this.history = historyCreator();
+
+            _this.state = {
+                location: null,
+                action: null
+            };
+            props.dispatch((0, _routing._setRouting)({
+                historyType: historyType,
+                history: _this.history,
+                location: _this.history.location,
+                query: _this.extractQuery()
+            }));
+
+            _this.unlisten = _this.history.listen(function (location, action) {
+                // location is an object like window.location
+                _this.setState({
+                    location: location,
+                    action: action
+                }, function () {
+                    props.dispatch((0, _routing._setRouting)({
+                        location: this.state.location,
+                        query: this.extractQuery()
+                    }));
                 });
-            }
+            });
+
+            return _this;
+        }
+
+        _createClass(History, [{
+            key: 'componentWillMount',
+            value: function componentWillMount() {}
         }, {
             key: 'componentWillUnmount',
             value: function componentWillUnmount() {
@@ -119,9 +106,13 @@ var createHistory = function createHistory(historyType) {
         return History;
     }(_react2.default.Component);
 
-    return (0, _reactRedux.connect)(function (state) {
-        return { routing: state.routing };
-    })(History);
+    var mapStateToProps = function mapStateToProps(state /*, ownProps*/) {
+        return {
+            routing: state.routing
+        };
+    };
+
+    return (0, _reactRedux.connect)(mapStateToProps)(History);
 };
 
 var HashHistory = createHistory('hash');
