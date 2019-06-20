@@ -3,9 +3,7 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
-import createHashHistory from 'history/createHashHistory';
-import createBrowserHistory from 'history/createBrowserHistory';
-import createMemoryHistory from 'history/createMemoryHistory';
+import { createHashHistory, createBrowserHistory, createMemoryHistory } from 'history';
 import { _setRouting } from '../actions/routing';
 
 const createHistory = (historyType) => {

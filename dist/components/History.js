@@ -13,17 +13,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require('react-redux');
 
-var _createHashHistory = require('history/createHashHistory');
-
-var _createHashHistory2 = _interopRequireDefault(_createHashHistory);
-
-var _createBrowserHistory = require('history/createBrowserHistory');
-
-var _createBrowserHistory2 = _interopRequireDefault(_createBrowserHistory);
-
-var _createMemoryHistory = require('history/createMemoryHistory');
-
-var _createMemoryHistory2 = _interopRequireDefault(_createMemoryHistory);
+var _history = require('history');
 
 var _routing = require('../actions/routing');
 
@@ -42,16 +32,16 @@ var createHistory = function createHistory(historyType) {
     var historyCreator = void 0;
     switch (historyType) {
         case 'hash':
-            historyCreator = _createHashHistory2.default;
+            historyCreator = _history.createHashHistory;
             break;
         case 'browser':
-            historyCreator = _createBrowserHistory2.default;
+            historyCreator = _history.createBrowserHistory;
             break;
         case 'memory':
-            historyCreator = _createMemoryHistory2.default;
+            historyCreator = _history.createMemoryHistory;
             break;
         default:
-            historyCreator = _createHashHistory2.default;
+            historyCreator = _history.createHashHistory;
     }
 
     var History = function (_React$Component) {
